@@ -10,13 +10,8 @@ export class CreateUserController {
 
     const createUserService = new CreateUserService();
 
-    try {
-      const user = await createUserService.execute({ name, email, password }, req, res);
-      return res.status(201).json(user);
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ message: "Erro ao criar usuário" });
-    }
+    const user = await createUserService.execute({ name, email, password }, req, res);
+    return user;
   }
 }
 
@@ -24,13 +19,8 @@ export class FindAllUserController {
   async findAll(req: Request, res: Response) {
     const findAllUserService = new FindAllUserService();
 
-    try {
-      const users = await findAllUserService.execute(req, res);
-      return res.status(200).json(users);
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ message: "Erro ao buscar usuários" });
-    }
+    const user = await findAllUserService.execute(req, res);
+    return user;
   }
 }
 
@@ -39,13 +29,8 @@ export class UpdatedUserController {
 
     const updatedUserService = new UpdatedUserService();
 
-    try {
-      const user = await updatedUserService.execute(req, res);
-      return res.status(200).json(user);
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ message: "Erro ao atualizar usuário" });
-    }
+    const user = await updatedUserService.execute(req, res);
+    return user;
   }
 }
 
@@ -55,16 +40,11 @@ export class DeleteUserController {
 
     const deleteUserService = new DeleteUserService();
 
-    try {
-      const user = await deleteUserService.execute(
-        { id: Number(id) },
-        req,
-        res
-      );
-      return res.status(200).json(user);
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json({ message: "Erro ao deletar usuário" });
-    }
+    const user = await deleteUserService.execute(
+      { id: Number(id) },
+      req,
+      res
+    );
+    return user;
   }
 }

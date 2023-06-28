@@ -3,17 +3,19 @@ import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
-interface IUser{
+interface IUser {
   id: number;
 }
 
 export class DeleteUserService {
-  async execute({id}: IUser, req: Request, res: Response) {
+  async execute({ id }: IUser, req: Request, res: Response) {
 
-    await prisma.user.delete({
+    const user = await prisma.user.delete({
       where: {
-        id,
+        id: id,
       },
     });
+
+    return res.json(user);
   }
 }
