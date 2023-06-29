@@ -4,25 +4,18 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class CreateCryptoCurrency {
-  async execute(req: Request, res: Response) {
-    const { walletId, cryptocurrencyId, quantity, transactionType, dateTime } = req.body;
+  async execute({ name, symbol, currentValue }, req: Request, res: Response) {
 
     // Perform any necessary validation on the input data - Validação de dados
 
-    const transaction = await prisma.transaction.create({
+    const cryptocurrency = await prisma.cryptoCurrency.create({
       data: {
-        wallet: {
-          connect: { id: walletId },
-        },
-        cryptoCurrency: {
-          connect: { id: cryptocurrencyId },
-        },
-        quantity,
-        transactionType,
-        dateTime,
+        name,
+        symbol,
+        currentValue,
       },
     });
 
-    return res.status(201).json(transaction);
+    return res.status(201).json(cryptocurrency);
   }
 }
