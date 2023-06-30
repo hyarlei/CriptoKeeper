@@ -15,35 +15,42 @@ Clone o repositório do CriptoKeeper em seu computador:
 bash
 
 git clone https://github.com/hyarlei/CriptoKeeper.git
+
 Acesse o diretório do projeto:
 bash
 
 cd cripto-keeper
+
 Instale as dependências do projeto usando o gerenciador de pacotes npm ou yarn:
 
 npm install
 ou
-
 yarn install
+
 Crie um arquivo .env na raiz do projeto e defina as seguintes variáveis de ambiente:
 bash
 
 DATABASE_URL=postgres://username:password@localhost:5432/cripto_keeper
+
 Certifique-se de substituir username e password pelas suas credenciais de acesso ao banco de dados PostgreSQL.
 
 Execute as migrações do banco de dados para criar as tabelas necessárias:
 
 npx prisma migrate dev
+
 ou
 
 yarn prisma migrate dev
+
 Inicie o servidor de desenvolvimento:
 arduino
 
 npm run dev
+
 ou
 
 yarn dev
+
 O CriptoKeeper estará disponível em http://localhost:3333. Você pode acessar esta URL em seu navegador para utilizar o projeto.
 ## Funcionalidades
 O CriptoKeeper possui as seguintes funcionalidades principais:
