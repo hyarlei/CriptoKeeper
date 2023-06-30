@@ -16,25 +16,27 @@ model User {
   email    String
   password String
   wallet   Wallet  @relation(fields: [walletId], references: [id])
-  walletId Int     // Representa a chave estrangeira
+  walletId Int
 }
 
 model Wallet {
-  id             Int         @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   user           User[]
-  transactionsId Int         @unique
-  transactions   Transaction @relation(fields: [transactionsId], references: [id])
+  transactions   Transaction[] @relation("WalletTransaction")
   balance        Float
 }
 
 model Transaction {
   id               Int            @id @default(autoincrement())
-  wallet           Wallet[]
+  wallet           Wallet        @relation("WalletTransaction", fields: [walletId], references: [id])
+  walletId         Int
   cryptocurrencyId Int?
   cryptoCurrency   CryptoCurrency? @relation(fields: [cryptocurrencyId], references: [id])
-  quantity          Int
+  quantity         Float
   transactionType  String
   dateTime         DateTime
+
+  @@unique([walletId, id])
 }
 
 model CryptoCurrency {

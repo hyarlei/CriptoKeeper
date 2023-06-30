@@ -12,7 +12,6 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Wallet" (
     "id" SERIAL NOT NULL,
-    "transactionsId" INTEGER NOT NULL,
     "balance" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Wallet_pkey" PRIMARY KEY ("id")
@@ -21,8 +20,9 @@ CREATE TABLE "Wallet" (
 -- CreateTable
 CREATE TABLE "Transaction" (
     "id" SERIAL NOT NULL,
+    "walletId" INTEGER NOT NULL,
     "cryptocurrencyId" INTEGER,
-    "quantity" INTEGER NOT NULL,
+    "quantity" DOUBLE PRECISION NOT NULL,
     "transactionType" TEXT NOT NULL,
     "dateTime" TIMESTAMP(3) NOT NULL,
 
@@ -40,13 +40,13 @@ CREATE TABLE "CryptoCurrency" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Wallet_transactionsId_key" ON "Wallet"("transactionsId");
+CREATE UNIQUE INDEX "Transaction_walletId_id_key" ON "Transaction"("walletId", "id");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Wallet" ADD CONSTRAINT "Wallet_transactionsId_fkey" FOREIGN KEY ("transactionsId") REFERENCES "Transaction"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_cryptocurrencyId_fkey" FOREIGN KEY ("cryptocurrencyId") REFERENCES "CryptoCurrency"("id") ON DELETE SET NULL ON UPDATE CASCADE;

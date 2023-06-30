@@ -23,13 +23,6 @@ export class CreateUserService {
 
     //const hashedPassword = await bcrypt.hash(password, 10); // Aplicar hash na senha
 
-    const transaction = await prisma.transaction.create({
-      data: {
-        dateTime: new Date(),
-        quantity: 0,
-        transactionType: "DEPOSIT",
-      }
-    });
 
     const user = await prisma.user.create({
       data: {
@@ -38,12 +31,14 @@ export class CreateUserService {
         password,
         wallet: {
           create: {
-            balance: 0.00,
+            balance: 0,
             transactions: {
-              connect: {
-                id: transaction.id,
+              create: {
+                quantity: 0,
+                transactionType: "buy",
+                dateTime: new Date(),
               },
-            }
+            },
           },
         },
       },
@@ -51,6 +46,7 @@ export class CreateUserService {
         wallet: true,
       },
     });
+
 
     return res.status(201).json(user);
   }

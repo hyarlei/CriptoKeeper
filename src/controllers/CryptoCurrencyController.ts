@@ -6,7 +6,6 @@ export class CryptoCurrencyController {
     const { name, symbol, currentValue } = req.body;
 
     const createCryptoCurrency = new CreateCryptoCurrency();
-
     const cryptoCurrency = await createCryptoCurrency.execute(
       { name, symbol, currentValue },
       req,

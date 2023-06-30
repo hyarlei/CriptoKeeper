@@ -7,7 +7,11 @@ export class FindAllUserService {
   async execute(req: Request, res: Response) {
     const users = await prisma.user.findMany({
       include: {
-        wallet: true,
+        wallet:{
+          include: {
+            transactions: true,
+          }
+        }
       },
     });
 
