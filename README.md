@@ -69,10 +69,15 @@ API Endpoints
 O CriptoKeeper oferece uma API RESTful com os seguintes endpoints:
 
 /user (POST): Cria um novo usuário com as informações fornecidas.
+
 /login (POST): Autentica um usuário existente e retorna um token de acesso.
+
 /wallet (POST): Cria uma nova carteira para o usuário autenticado.
+
 /wallet/:id (GET): Retorna o saldo disponível na carteira do usuário autenticado.
+
 /transaction (POST): Realiza uma transação de criptomoedas entre duas carteiras.
+
 Para cada endpoint, é necessário incluir os cabeçalhos Authorization com o token de acesso válido.
 
 ### Considerações Finais
