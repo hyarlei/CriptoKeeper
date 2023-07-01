@@ -3,28 +3,29 @@ import { GetWalletById } from "../service/WalletService/GetWalletById";
 import { UpdateWalletBalance } from "../service/WalletService/UpdateWalletBalance";
 
 export class FindAllWalletController {
-  async findAll(request: Request, response: Response) {
-    const { id } = request.params;
+  async findAll(req: Request, res: Response) {
+    const { id } = req.params;
 
     const getWalletById = new GetWalletById();
 
     const wallet = await getWalletById.getWalletById(Number(id));
 
-    return response.json(wallet);
+    return wallet;
   }
 }
 
 export class UpdatedWalletController {
-  async updated(request: Request, response: Response) {
-    const { id } = request.params;
-    const { balance } = request.body;
+  async updated(req: Request, res: Response) {
+    const { id } = req.params;
+    const { balance } = req.body;
 
     const updateWalletBalance = new UpdateWalletBalance();
+
     const wallet = await updateWalletBalance.updateWalletBalance(
       Number(id),
       Number(balance)
     );
 
-    return response.json(wallet);
+    return wallet;
   }
 }

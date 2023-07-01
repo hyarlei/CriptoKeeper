@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
 import { createTransaction } from "../service/TransactionService/CreateTransactionService";
+import { FindAllTransactionService } from "../service/TransactionService/FindAllTransactionService";
 
+const prisma = new PrismaClient();
 export class TransactionController {
   async create(req: Request, res: Response) {
     const { cryptocurrencyId, quantity, transactionType, dateTime } = req.body;
@@ -12,6 +15,18 @@ export class TransactionController {
       req,
       res
     );
+
+    return transaction;
+  }
+}
+
+export class FindAllTransactionController {
+  async findAll(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const findAllTransaction = new FindAllTransactionService();
+
+    const transaction = await findAllTransaction.findAll(req, res);
 
     return transaction;
   }

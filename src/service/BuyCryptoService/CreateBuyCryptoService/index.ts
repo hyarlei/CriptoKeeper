@@ -3,13 +3,14 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class createBuyCryptoService {
+export class CreateBuyCryptoService {
   async execute(
     { cryptoCurrencyId, quantity, walletId },
     req: Request,
     res: Response
   ) {
     // Perform any necessary validation on the input data - Validação de dados
+
     const currentCryptoCurrency = await prisma.cryptoCurrency.findUnique({
       where: {
         id: cryptoCurrencyId,
@@ -18,12 +19,16 @@ export class createBuyCryptoService {
 
     const buyCrypto = await prisma.transaction.create({
       data: {
-        cryptoCurrency: {
-          connect: { id: cryptoCurrencyId },
-        },
         quantity,
         transactionType: "buy",
         dateTime: new Date(),
+
+        wallet: {
+          connect: { id: walletId },
+        },
+        cryptoCurrency: {
+          connect: { id: cryptoCurrencyId },
+        },
       },
     });
 

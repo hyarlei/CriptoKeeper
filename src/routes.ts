@@ -19,18 +19,27 @@ routes.put("/user/:id", updatedUserController.updated);
 routes.delete("/user/:id", deleteUserController.delete);
 
 // CryptoCurrency
-import { CryptoCurrencyController } from './controllers/CryptoCurrencyController';
+import { CreateCryptoCurrencyController } from './controllers/CryptoCurrencyController';
+import { FindAllCryptoCurrencyController } from './controllers/CryptoCurrencyController';
+import { UpdateCryptoCurrencyController } from './controllers/CryptoCurrencyController';
 
-const cryptoCurrencyController = new CryptoCurrencyController();
+const cryptoCurrencyController = new CreateCryptoCurrencyController();
+const findAllCryptoCurrencyController = new FindAllCryptoCurrencyController();
+const updateCryptoCurrencyController = new UpdateCryptoCurrencyController();
 
 routes.post("/cryptocurrency", cryptoCurrencyController.create);
+routes.get("/cryptocurrency", findAllCryptoCurrencyController.findAll);
+routes.put("/cryptocurrency/:id", updateCryptoCurrencyController.update);
 
 // Transaction
 import { TransactionController } from './controllers/TransactionController';
+import { FindAllTransactionController } from './controllers/TransactionController';
 
 const createTransactionController = new TransactionController();
+const findAllTransactionController = new FindAllTransactionController();
 
 routes.post("/transaction", createTransactionController.create);
+routes.get("/transaction", findAllTransactionController.findAll);
 
 // Wallet
 import { FindAllWalletController } from './controllers/WalletController';
