@@ -21,6 +21,7 @@ export class CreateCryptoCurrencyController {
 export class FindAllCryptoCurrencyController {
   async findAll(req: Request, res: Response) {
     const findAllCryptoCurrency = new FindAllCryptoCurrency();
+    
     const cryptoCurrency = await findAllCryptoCurrency.execute(req, res);
 
     return cryptoCurrency;

@@ -53,7 +53,20 @@ routes.put("/wallet/:id", updatedWalletController.updated);
 
 // BuyCrypto
 import { CreateBuyCryptoController } from './controllers/BuyCryptoController';
+import { FindAllByCryptoController } from './controllers/BuyCryptoController';
 
 const createBuyCryptoController = new CreateBuyCryptoController();
+const findAllSellCryptoService = new FindAllByCryptoController();
 
 routes.post("/buycrypto", createBuyCryptoController.create);
+routes.get("/buycrypto", findAllSellCryptoService.findAllByCrypto);
+
+// SellCrypto
+import { CreateSellCryptoController } from './controllers/SellCryptoController';
+import { FindAllSellCryptoController } from './controllers/SellCryptoController';
+
+const createSellCryptoController = new CreateSellCryptoController();
+const findAllBuyCryptoService = new FindAllSellCryptoController();
+
+routes.post("/sellcrypto", createSellCryptoController.create);
+routes.get("/sellcrypto", findAllBuyCryptoService.sell);

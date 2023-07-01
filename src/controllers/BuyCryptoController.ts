@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CreateBuyCryptoService } from "../service/BuyCryptoService/CreateBuyCryptoService";
+import { FindAllByCryptoService } from "../service/BuyCryptoService/FindAllByCryptoService";
 
 export class CreateBuyCryptoController {
   async create(req: Request, res: Response) {
@@ -12,6 +13,21 @@ export class CreateBuyCryptoController {
       req,
       res
     );
+
+    return buyCrypto;
+  }
+}
+
+export class FindAllByCryptoController {
+  async findAllByCrypto(req: Request, res: Response) {
+
+    const findAllByCrypto = new FindAllByCryptoService();
+
+    const buyCrypto = await findAllByCrypto.findAll(//{ cryptoCurrencyId },
+      req,
+      res
+    );
+
     return buyCrypto;
   }
 }
