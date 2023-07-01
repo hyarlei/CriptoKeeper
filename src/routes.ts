@@ -50,3 +50,10 @@ const updatedWalletController = new UpdatedWalletController();
 
 routes.get("/wallet/:id", findAllWalletController.findAll);
 routes.put("/wallet/:id", updatedWalletController.updated);
+
+// BuyCrypto
+import { CreateBuyCryptoController } from './controllers/BuyCryptoController';
+
+const createBuyCryptoController = new CreateBuyCryptoController();
+
+routes.post("/buycrypto", createBuyCryptoController.create);
