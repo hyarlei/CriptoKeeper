@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export class CreateBuyCryptoService {
   async execute({ cryptoCurrencyId, quantity, walletId }, req: Request, res: Response) {
-    // Perform any necessary validation on the input data - Validação de dados
 
     // Check if the user exists - Verificar se o usuário existe
     const user = await prisma.user.findUnique({
@@ -59,13 +58,10 @@ export class CreateBuyCryptoService {
 
     // Atualizar o saldo da carteira do usuário
     await prisma.wallet.update({
-      where: {
-        id: walletId,
-      },
+      where: { id: walletId },
       data: {
-        balance: {
-          decrement: buyCrypto.quantity * currentCryptoCurrency.currentValue,
-        },
+        // balance: wallet.balance - cryptoCurrency.currentValue * quantity,
+        balance: walletId.balance - cryptoCurrency.currentValue * quantity,
         transactions: {
           connect: { id: buyCrypto.id },
         },
