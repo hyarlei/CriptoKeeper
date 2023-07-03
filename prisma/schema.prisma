@@ -24,6 +24,8 @@ model Wallet {
   user           User[]
   transactions   Transaction[] @relation("WalletTransaction")
   balance        Float
+  qtdBitcoin     Float
+  qtdEthereum    Float
 }
 
 model Transaction {

@@ -31,11 +31,11 @@ export class CreateUserService {
         password,
         wallet: {
           create: {
-            balance: 0,
+            balance: 1000,
             transactions: {
               create: {
                 quantity: 0,
-                transactionType: "buy",
+                transactionType: "deposit",
                 dateTime: new Date(),
               },
             },

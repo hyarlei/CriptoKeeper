@@ -10,7 +10,7 @@ interface IUser {
 }
 
 export class AuthController {
-  async execute(req: Request, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response, next: NextFunction) {
     const { id, password}: IUser = req.body;
 
     const userAuthenticationService = new UserAuthenticationService();

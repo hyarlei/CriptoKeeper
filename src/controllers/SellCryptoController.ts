@@ -3,11 +3,11 @@ import { SellCryptoService } from "../service/SellCryptoService/CreateSellCrypto
 
 export class CreateSellCryptoController {
   async create(req: Request, res: Response) {
-    const { user, cryptoCurrencyId, quantity } = req.body;
+    const { cryptoCurrencyId, quantity, walletId } = req.body;
 
     const sellCryptoService = new SellCryptoService();
 
-    const sellCrypto = await sellCryptoService.execute({ user, cryptoCurrencyId, quantity }, req, res);
+    const sellCrypto = await sellCryptoService.execute({ cryptoCurrencyId, quantity, walletId }, req, res);
 
     return sellCrypto;
   }
@@ -15,11 +15,11 @@ export class CreateSellCryptoController {
 
 export class FindAllSellCryptoController {
   async sell(req: Request, res: Response) {
-    const { user, cryptoCurrencyId, quantity } = req.body;
+    const { cryptoCurrencyId, quantity, walletId } = req.body;
 
     const sellCryptoService = new SellCryptoService();
 
-    const sellCrypto = await sellCryptoService.execute({ user, cryptoCurrencyId, quantity }, req, res);
+    const sellCrypto = await sellCryptoService.execute({ cryptoCurrencyId, quantity, walletId }, req, res);
 
     return sellCrypto;
   }

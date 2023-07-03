@@ -2,6 +2,13 @@ import { Router } from 'express';
 
 export const routes = Router();
 
+//Login
+import { AuthController } from "./controllers/LoginController";
+
+const authController = new AuthController();
+
+// Rotas Login
+
 // User
 import { CreateUserController } from './controllers/UserController';
 import { FindAllUserController } from './controllers/UserController';
@@ -48,7 +55,7 @@ import { UpdatedWalletController } from './controllers/WalletController';
 const findAllWalletController = new FindAllWalletController();
 const updatedWalletController = new UpdatedWalletController();
 
-routes.get("/wallet/:id", findAllWalletController.findAll);
+routes.get("/wallet", findAllWalletController.findAll);
 routes.put("/wallet/:id", updatedWalletController.updated);
 
 // BuyCrypto

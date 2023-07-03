@@ -4,7 +4,7 @@ import { UpdateWalletBalance } from "../service/WalletService/UpdateWalletBalanc
 
 export class FindAllWalletController {
   async findAll(req: Request, res: Response) {
-    const { id } = req.params;
+    const { id } = req.body;
 
     const getWalletById = new GetWalletById();
 

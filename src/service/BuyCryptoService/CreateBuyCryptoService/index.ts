@@ -15,15 +15,6 @@ export class CreateBuyCryptoService {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Check if the crypto currency exists - Verificar se o cripto é válido
-    const cryptoCurrency = await prisma.cryptoCurrency.findUnique({
-      where: { id: cryptoCurrencyId },
-    });
-
-    if (!cryptoCurrency) {
-      return res.status(404).json({ message: "Crypto currency not found" });
-    }
-
     // Check if the quantity is valid - Verificar se a quantidade é válida
     if (quantity <= 0) {
       return res.status(400).json({
@@ -41,6 +32,12 @@ export class CreateBuyCryptoService {
       return res.status(404).json({ message: "CryptoCurrency not found" });
     }
 
+    const wallet = await prisma.wallet.findUnique({
+      where: {
+        id: walletId,
+      },
+    });
+
     // Criar a transação de compra
     const buyCrypto = await prisma.transaction.create({
       data: {
@@ -51,8 +48,12 @@ export class CreateBuyCryptoService {
           connect: { id: walletId },
         },
         cryptoCurrency: {
-          connect: { id: cryptoCurrencyId },
+          connect: { id: currentCryptoCurrency.id },
         },
+      },
+      include: {
+        wallet: true,
+        cryptoCurrency: true,
       },
     });
 
@@ -60,11 +61,7 @@ export class CreateBuyCryptoService {
     await prisma.wallet.update({
       where: { id: walletId },
       data: {
-        // balance: wallet.balance - cryptoCurrency.currentValue * quantity,
-        balance: walletId.balance - cryptoCurrency.currentValue * quantity,
-        transactions: {
-          connect: { id: buyCrypto.id },
-        },
+        balance: wallet.balance - currentCryptoCurrency.currentValue * quantity,
       },
     });
 
