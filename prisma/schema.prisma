@@ -11,26 +11,26 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   name     String
   email    String
   password String
-  wallet   Wallet  @relation(fields: [walletId], references: [id])
+  wallet   Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
   walletId Int
 }
 
 model Wallet {
-  id             Int           @id @default(autoincrement())
-  user           User[]
-  transactions   Transaction[] @relation("WalletTransaction")
-  balance        Float
-  qtdBitcoin     Float
-  qtdEthereum    Float
+  id           Int           @id @default(autoincrement())
+  user         User[]
+  transactions Transaction[] @relation("WalletTransaction")
+  balance      Float
+  qtdBitcoin   Float
+  qtdEthereum  Float
 }
 
 model Transaction {
-  id               Int            @id @default(autoincrement())
-  wallet           Wallet        @relation("WalletTransaction", fields: [walletId], references: [id])
+  id               Int             @id @default(autoincrement())
+  wallet           Wallet          @relation("WalletTransaction", fields: [walletId], references: [id])
   walletId         Int
   cryptocurrencyId Int?
   cryptoCurrency   CryptoCurrency? @relation(fields: [cryptocurrencyId], references: [id])

@@ -41,16 +41,6 @@ routes.post("/cryptocurrency", AuthMiddleware, cryptoCurrencyController.create);
 routes.get("/cryptocurrency", AuthMiddleware, findAllCryptoCurrencyController.findAll);
 routes.put("/cryptocurrency/:id", AuthMiddleware, updateCryptoCurrencyController.update);
 
-// Transaction
-import { TransactionController } from './controllers/TransactionController';
-import { FindAllTransactionController } from './controllers/TransactionController';
-
-const createTransactionController = new TransactionController();
-const findAllTransactionController = new FindAllTransactionController();
-
-routes.post("/transaction", AuthMiddleware, createTransactionController.create);
-routes.get("/transaction", AuthMiddleware, findAllTransactionController.findAll);
-
 // Wallet
 import { FindAllWalletController } from './controllers/WalletController';
 import { UpdatedWalletController } from './controllers/WalletController';

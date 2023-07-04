@@ -64,13 +64,23 @@ export class CreateBuyCryptoService {
       },
     });
 
-    // Atualizar o saldo da carteira do usuário
-    await prisma.wallet.update({
-      where: { id: walletId },
-      data: {
-        balance: wallet.balance - currentCryptoCurrency.currentValue * quantity,
-      },
-    });
+    if(currentCryptoCurrency.symbol === 'BTC') {
+      await prisma.wallet.update({
+        where: { id: walletId },
+        data: {
+          balance: wallet.balance - currentCryptoCurrency.currentValue * quantity,
+          qtdBitcoin: quantity,
+        },
+      });
+    } else {
+      await prisma.wallet.update({
+        where: { id: walletId },
+        data: {
+          balance: wallet.balance - currentCryptoCurrency.currentValue * quantity,
+          qtdEthereum: quantity,
+        },
+      });
+    }
 
     return res.status(201).json(buyCrypto);
   }

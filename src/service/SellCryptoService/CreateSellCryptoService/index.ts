@@ -38,6 +38,16 @@ export class SellCryptoService {
       },
     });
 
+    if (quantity > wallet.qtdBitcoin && currentCryptoCurrency.symbol === 'BTC') {
+      return res.status(400).json({
+        message: 'Insufficient BTC quantity',
+      });
+    } else if (quantity > wallet.qtdEthereum && currentCryptoCurrency.symbol === 'ETH') {
+      return res.status(400).json({
+        message: 'Insufficient ETH quantity',
+      });
+    }
+
     // Criar a transação de venda
     const transaction = await prisma.transaction.create({
       data: {
@@ -58,12 +68,23 @@ export class SellCryptoService {
     });
 
     // Atualizar o saldo da carteira do usuário
-    await prisma.wallet.update({
-      where: { id: wallet.id },
-      data: {
-        balance: wallet.balance + currentCryptoCurrency.currentValue * quantity,
-      },
-    });
+    if(currentCryptoCurrency.symbol === 'BTC') {
+      await prisma.wallet.update({
+        where: { id: walletId },
+        data: {
+          balance: wallet.balance + currentCryptoCurrency.currentValue * quantity,
+          qtdBitcoin: quantity,
+        },
+      });
+    } else {
+      await prisma.wallet.update({
+        where: { id: walletId },
+        data: {
+          balance: wallet.balance + currentCryptoCurrency.currentValue * quantity,
+          qtdEthereum: quantity,
+        },
+      });
+    }
 
     return res.status(201).json(transaction);
   }
