@@ -29,7 +29,7 @@ export class CreateUserService {
         password,
         wallet: {
           create: {
-            balance: 1000,
+            balance: 1000000,
             qtdBitcoin: 0,
             qtdEthereum: 0,
             transactions: {

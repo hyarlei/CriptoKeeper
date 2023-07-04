@@ -46,7 +46,7 @@ export class CreateBuyCryptoService {
     }
 
     // Criar a transação de compra
-    const buyCrypto = await prisma.transaction.create({
+    const transaction = await prisma.transaction.create({
       data: {
         quantity,
         transactionType: "buy",
@@ -64,12 +64,13 @@ export class CreateBuyCryptoService {
       },
     });
 
+    // Atualizar o saldo da carteira do usuário
     if(currentCryptoCurrency.symbol === 'BTC') {
       await prisma.wallet.update({
         where: { id: walletId },
         data: {
           balance: wallet.balance - currentCryptoCurrency.currentValue * quantity,
-          qtdBitcoin: quantity,
+          qtdBitcoin: wallet.qtdBitcoin + quantity, // Adiciona a quantidade comprada à quantidade existente
         },
       });
     } else {
@@ -77,11 +78,11 @@ export class CreateBuyCryptoService {
         where: { id: walletId },
         data: {
           balance: wallet.balance - currentCryptoCurrency.currentValue * quantity,
-          qtdEthereum: quantity,
+          qtdBitcoin: wallet.qtdBitcoin + quantity, // Adiciona a quantidade comprada à quantidade existente
         },
       });
     }
 
-    return res.status(201).json(buyCrypto);
+    return res.status(201).json(transaction);
   }
 }

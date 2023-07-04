@@ -73,7 +73,7 @@ export class SellCryptoService {
         where: { id: walletId },
         data: {
           balance: wallet.balance + currentCryptoCurrency.currentValue * quantity,
-          qtdBitcoin: quantity,
+          qtdBitcoin: wallet.qtdBitcoin - quantity, // Subtrai a quantidade vendida da quantidade existente
         },
       });
     } else {
@@ -81,7 +81,7 @@ export class SellCryptoService {
         where: { id: walletId },
         data: {
           balance: wallet.balance + currentCryptoCurrency.currentValue * quantity,
-          qtdEthereum: quantity,
+          qtdEthereum: wallet.qtdEthereum - quantity, // Subtrai a quantidade vendida da quantidade existente
         },
       });
     }
