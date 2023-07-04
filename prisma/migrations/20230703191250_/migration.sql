@@ -13,6 +13,8 @@ CREATE TABLE "User" (
 CREATE TABLE "Wallet" (
     "id" SERIAL NOT NULL,
     "balance" DOUBLE PRECISION NOT NULL,
+    "qtdBitcoin" DOUBLE PRECISION NOT NULL,
+    "qtdEthereum" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Wallet_pkey" PRIMARY KEY ("id")
 );

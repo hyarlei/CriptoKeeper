@@ -1,36 +1,32 @@
-import { Request, Response, NextFunction } from "express";
-import { verify } from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express';
+import { verify } from 'jsonwebtoken';
 
-interface UserMiddleware {
-  id: number;
-  iat: number;
-  exp: number;
+type TokenPayload = {
+    id: string;
+    iat: number;
+    exp: number;
 }
 
-export async function AuthMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function AuthMiddleware(
+    req: Request,
+    res: Response,
+    next: NextFunction
+){
+    const {authorization} = req.headers;
 
-  const { authorization } = req.headers;
-
-  if (!authorization) {
-    return res.status(401).json({ error: "Token is missing" });
-  }
-
-  const [, token] = authorization.split(" ");
-
-  try {
-    const decoded = verify(token, "secret");
-
-    const { id } = decoded as UserMiddleware;
-
-    if (id) {
-      throw new Error("Unauthorized");
+    if(!authorization){
+        return res.status(401).json({error: 'Token not provided'});
     }
-  return next();
-  } catch (error) {
-    return res.status(401).json({ error });
-  }
+
+    const [, token] = authorization.split(' ');
+
+    try {
+        const decoded = verify(token, 'secret');
+        const {id} = decoded as TokenPayload;
+
+        req.userId = id;
+        next();
+    } catch (error) {
+        return res.status(401).json({error: 'Token invalid'});
+    }
 }

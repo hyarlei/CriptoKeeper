@@ -13,9 +13,10 @@ export class UserAuthenticationService {
   async execute({id, password}: IUser,
     req: Request, res: Response, next: NextFunction ) {
 
+    console.log(id);
     const user = await prisma.user.findUnique({
       where: {
-        id,
+        id: Number(id),
       },
     });
 

@@ -38,6 +38,13 @@ export class CreateBuyCryptoService {
       },
     });
 
+    // Check if the user has enough balance - Verificar se o usuário tem saldo suficiente
+    if (currentCryptoCurrency.currentValue * quantity > wallet.balance) {
+      return res.status(400).json({
+        message: 'Insufficient balance',
+      });
+    }
+
     // Criar a transação de compra
     const buyCrypto = await prisma.transaction.create({
       data: {
